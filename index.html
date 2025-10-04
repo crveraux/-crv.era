@@ -1,251 +1,168 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>TheStartOfTheCrvEra</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<title>TheStartOfTheCrvEra</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Nosifer&display=swap" rel="stylesheet">
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  color: white;
+  overflow-x: hidden;
+  background: #0d0d0d;
+}
 
-  <!-- Google Font for Dripping Graffiti -->
-  <link href="https://fonts.googleapis.com/css2?family=Nosifer&display=swap" rel="stylesheet">
+/* Background image with stronger blur */
+#background {
+  position: fixed;
+  inset: 0;
+  background: url('https://media.discordapp.net/attachments/1423120456499724359/1423630335790284831/IMG_2549.png?ex=68e25411&is=68e10291&hm=449414fde5060c6c41641639ba7aa64e5126f484bffef1569f950995b0485faf&=') center center / cover no-repeat;
+  filter: blur(8px); /* everything blurred initially */
+  transition: filter 0.4s ease;
+  z-index: 1;
+  will-change: filter;
+}
 
-  <style>
-    body {
-      background: #0d0d0d;
-      color: white;
-      font-family: Arial, sans-serif;
-      padding: 30px;
-      text-align: center;
-    }
+/* Loader button */
+#loader {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 20; /* above everything */
+}
 
-    /* Content to blur */
-    #content {
-      filter: blur(10px);
-      transition: filter 0.5s ease;
-    }
+#playBtn {
+  font-size: 36px;
+  padding: 20px 40px;
+  border: none;
+  border-radius: 15px;
+  background: #00ffff;
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 0 10px #00ffff;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
 
-    /* Loader overlay */
-    #loader {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.7);
-      backdrop-filter: blur(10px);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-      flex-direction: column;
-    }
+#playBtn:hover {
+  box-shadow: 0 0 20px #00ffff, 0 0 40px #00ffff;
+  transform: scale(1.1);
+}
 
-    #playBtn {
-      font-size: 36px;
-      padding: 20px 40px;
-      border: none;
-      border-radius: 15px;
-      background: #00ffff;
-      color: #000;
-      font-weight: bold;
-      cursor: pointer;
-      box-shadow: 0 0 10px #00ffff;
-      transition: all 0.3s;
-      z-index: 10000;
-    }
+@keyframes spin {
+  0% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(180deg) scale(1.1); }
+  100% { transform: rotate(360deg) scale(1); }
+}
 
-    #playBtn:hover {
-      box-shadow: 0 0 20px #00ffff, 0 0 40px #00ffff;
-      transform: scale(1.1);
-    }
+#playBtn.spin {
+  animation: spin 0.6s ease-in-out forwards;
+}
 
-    /* Spin animation */
-    @keyframes spin {
-      0% { transform: rotate(0deg) scale(1); }
-      50% { transform: rotate(180deg) scale(1.1); }
-      100% { transform: rotate(360deg) scale(1); }
-    }
+/* Content container */
+#content {
+  position: relative;
+  z-index: 5;
+  padding: 30px;
+  text-align: center;
+  filter: blur(8px); /* everything initially blurred */
+  transition: filter 0.5s ease;
+}
 
-    #playBtn.spin {
-      animation: spin 0.6s ease-in-out forwards;
-    }
+/* Guild tag & other styles */
+.guild-tag { display: inline-flex; align-items: center; gap: 10px; background: #1a1a1a; padding: 10px 20px; border-radius: 10px; font-size: 24px; font-weight: bold; margin-bottom: 20px; text-decoration: none; color: #fff; border: 2px solid #00ffff; box-shadow: 0 0 5px #00ffff; animation: glow 1.5s infinite alternate; transition: transform 0.3s; }
+.guild-tag img { width: 60px; height: 60px; border-radius: 50%; border: 2px solid #555; }
+.guild-tag:hover { transform: scale(1.05); box-shadow: 0 0 20px #00ffff, 0 0 40px #00ffff; }
+@keyframes glow { 0% { box-shadow: 0 0 5px #00ffff; } 100% { box-shadow: 0 0 20px #00ffff, 0 0 40px #00ffff; } }
 
-    /* Glowing Guild Badge */
-    .guild-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      background: #1a1a1a;
-      padding: 10px 20px;
-      border-radius: 10px;
-      font-size: 24px;
-      font-weight: bold;
-      margin-bottom: 20px;
-      text-decoration: none;
-      color: #fff;
-      border: 2px solid #00ffff;
-      box-shadow: 0 0 5px #00ffff;
-      animation: glow 1.5s infinite alternate;
-      transition: transform 0.3s;
-    }
+.join-btn { display: inline-block; margin-top: 10px; background: #00ffff; color: #000; padding: 10px 20px; border-radius: 8px; font-weight: bold; text-decoration: none; transition: background 0.2s; }
+.join-btn:hover { background: #66ffff; }
 
-    .guild-tag img {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      border: 2px solid #555;
-    }
+.elite-divider { margin: 40px 0 20px; font-size: 20px; font-weight: bold; color: #ff4444; }
 
-    .guild-tag:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 20px #00ffff, 0 0 40px #00ffff;
-    }
+.members-grid { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); justify-items: center; }
 
-    @keyframes glow {
-      0% { box-shadow: 0 0 5px #00ffff; }
-      100% { box-shadow: 0 0 20px #00ffff, 0 0 40px #00ffff; }
-    }
+.member { background: #111; padding: 20px; border-radius: 12px; width: 100%; max-width: 300px; transition: transform 0.2s, box-shadow 0.2s; position: relative; }
+.member:hover { transform: translateY(-5px); }
 
-    .join-btn {
-      display: inline-block;
-      margin-top: 10px;
-      background: #00ffff;
-      color: #000;
-      padding: 10px 20px;
-      border-radius: 8px;
-      font-weight: bold;
-      text-decoration: none;
-      transition: background 0.2s;
-    }
-    .join-btn:hover { background: #66ffff; }
+.member img { width: 100px; height: 100px; border-radius: 50%; border: 3px solid #444; margin-bottom: 10px; }
+.member h2, .rank-label { font-family: 'Nosifer', cursive; }
+.member.me h2 { color: #ff0000; font-size: 24px; }
+.member.other h2 { color: #8000ff; font-size: 24px; }
+.member p { font-size: 14px; color: #ccc; }
 
-    /* Elite Divider */
-    .elite-divider {
-      margin: 40px 0 20px;
-      font-size: 20px;
-      font-weight: bold;
-      color: #ff4444;
-    }
+.link { display: block; background: #1a1a1a; padding: 10px; margin: 6px auto; border-radius: 8px; text-decoration: none; color: white; font-weight: bold; max-width: 300px; transition: background 0.2s; }
+.link:hover { background: #333; }
 
-    .members-grid {
-      display: grid;
-      gap: 20px;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      justify-items: center;
-    }
-
-    .member {
-      background: #111;
-      padding: 20px;
-      border-radius: 12px;
-      width: 100%;
-      max-width: 300px;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-
-    .member:hover {
-      transform: translateY(-5px);
-    }
-
-    .member.me:hover { box-shadow: 0 0 15px #ff0000; }
-    .member.other:hover { box-shadow: 0 0 15px #00aaff; }
-
-    .member img {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      border: 3px solid #444;
-      margin-bottom: 10px;
-    }
-
-    .member.me h2 {
-      font-family: 'Nosifer', cursive;
-      font-size: 24px;
-      color: #ff4444;
-    }
-
-    .member h2 {
-      margin: 5px 0;
-    }
-
-    .member p {
-      font-size: 14px;
-      color: #ccc;
-    }
-
-    .link {
-      display: block;
-      background: #1a1a1a;
-      padding: 10px;
-      margin: 6px auto;
-      border-radius: 8px;
-      text-decoration: none;
-      color: white;
-      font-weight: bold;
-      max-width: 300px;
-      transition: background 0.2s;
-    }
-    .link:hover { background: #333; }
-  </style>
+.rank-label { display: inline-block; padding: 3px 10px; margin: 4px 2px; border-radius: 6px; font-size: 12px; font-weight: bold; color: white; box-shadow: 0 0 5px #000; }
+.foundingFather { background: linear-gradient(90deg,#ff0000,#ff3333); }
+.velsDuo { background: linear-gradient(90deg,#8000ff,#a366ff); }
+.crvRank { background: linear-gradient(90deg,#00ffff,#66ffff); }
+</style>
 </head>
 <body>
 
-  <!-- Loader -->
-  <div id="loader">
-    <button id="playBtn">▶ Play</button>
-  </div>
+<!-- Background -->
+<div id="background"></div>
 
-  <!-- Background Music -->
-  <audio id="bg-music" src="whenthesunhits.mp3" loop></audio>
+<!-- Play button -->
+<div id="loader">
+  <button id="playBtn">▶ Play</button>
+</div>
 
-  <!-- Page Content -->
-  <div id="content">
-    <!-- Glowing Guild Badge -->
-    <a class="guild-tag" href="https://discord.gg/v2e7kAHZck" target="_blank">
-      <img src="https://i.pinimg.com/736x/a0/ed/a1/a0eda12fec61a440af27d7087839aa96.jpg" alt="Guild Icon">
-      /crv
-    </a>
+<audio id="bg-music" src="whenthesunhits.mp3" loop></audio>
 
-    <br>
-    <a class="join-btn" href="https://discord.gg/v2e7kAHZck" target="_blank">Join REPZ</a>
+<div id="content">
+  <a class="guild-tag" href="https://discord.gg/v2e7kAHZck" target="_blank">
+    <img src="https://i.pinimg.com/736x/a0/ed/a1/a0eda12fec61a440af27d7087839aa96.jpg" alt="Guild Icon"> /crv
+  </a>
+  <br>
+  <a class="join-btn" href="https://discord.gg/v2e7kAHZck" target="_blank">Join The Rstr</a>
 
-    <!-- Crv Era -->
-    <div class="elite-divider">Crv Members Only</div>
+  <div class="elite-divider">Crv Members Only</div>
 
-    <!-- Members Grid -->
-    <div class="members-grid">
-      <div class="member me">
-        <img src="https://cdn.discordapp.com/avatars/1205489879195193356/928f7d43b753ba8408fcbf83d4ed0471.webp?size=128" alt="Avatar">
-        <h2>Velᶜʳᵛ</h2>
-        <p>Boost Server Join GuildTag/Founder of crv and Guild</p>
-        <a class="link" href="https://discord.com/users/1205489879195193356" target="_blank">Discord Profile</a>
-      </div>
-      <div class="member other">
-        <img src="https://cdn.discordapp.com/avatars/1421878203861045441/a391919cab42df221d8c6a8698c90356.webp?size=1024" alt="Avatar">
-        <h2>nigga⁸₅⁴C̶R̶V̶</h2>
-        <p>crv/x671/x135/2009/854/cutorgns/cant think of more</p>
-        <a class="link" href="https://discord.com/users/1421878203861045441" target="_blank">Link</a>
-      </div>
+  <div class="members-grid">
+    <div class="member">
+      <img src="https://cdn.discordapp.com/avatars/1205489879195193356/928f7d43b753ba8408fcbf83d4ed0471.webp?size=128" alt="Avatar">
+      <h2>Velᶜʳᵛ</h2>
+      <div class="rank-label foundingFather">Founding Father</div>
+      <div class="rank-label crvRank">CRV</div>
+      <p>Boost Server Join GuildTag/Founder of crv and Guild</p>
+      <a class="link" href="https://discord.com/users/1205489879195193356" target="_blank">Discord Profile</a>
+    </div>
+
+    <div class="member">
+      <img src="https://cdn.discordapp.com/avatars/1421878203861045441/a391919cab42df221d8c6a8698c90356.webp?size=1024" alt="Avatar">
+      <h2>nigga⁸₅⁴C̶R̶V̶</h2>
+      <div class="rank-label velsDuo">Vel’s Duo</div>
+      <div class="rank-label crvRank">CRV</div>
+      <p>crv/x671/x135/2009/854/cutorgns/cant think of more</p>
+      <a class="link" href="https://discord.com/users/1421878203861045441" target="_blank">Link</a>
     </div>
   </div>
+</div>
 
-  <script>
-    const playBtn = document.getElementById('playBtn');
-    const loader = document.getElementById('loader');
-    const music = document.getElementById('bg-music');
-    const content = document.getElementById('content');
+<script>
+const playBtn = document.getElementById('playBtn');
+const loader = document.getElementById('loader');
+const background = document.getElementById('background');
+const content = document.getElementById('content');
+const music = document.getElementById('bg-music');
 
-    playBtn.addEventListener('click', () => {
-      // Play music
-      music.play();
-
-      // Spin button
-      playBtn.classList.add('spin');
-
-      // After spin animation, hide loader and remove blur on content
-      setTimeout(() => {
-        loader.style.opacity = '0';
-        content.style.filter = 'none';
-        setTimeout(() => loader.style.display = 'none', 500);
-      }, 600); // match spin duration
-    });
-  </script>
+playBtn.addEventListener('click', () => {
+  music.play();
+  playBtn.classList.add('spin');
+  // remove blur
+  background.style.filter = 'none';
+  content.style.filter = 'none';
+  // hide loader after animation
+  setTimeout(() => loader.style.display = 'none', 600);
+});
+</script>
 
 </body>
 </html>
