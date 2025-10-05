@@ -9,7 +9,7 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  color: white;
+  color: #eee;
   overflow-x: hidden;
   background: #0d0d0d;
 }
@@ -18,8 +18,8 @@ body {
 #background {
   position: fixed;
   inset: 0;
-  background: url('https://media.discordapp.net/attachments/1423120456499724359/1423630335790284831/IMG_2549.png?ex=68e25411&is=68e10291&hm=449414fde5060c6c41641639ba7aa64e5126f484bffef1569f950995b0485faf&=') center center / cover no-repeat;
-  filter: blur(8px); /* everything blurred initially */
+  background: url('https://media.discordapp.net/attachments/1423120456499724359/1424197246676897842/IMG_2098.png?ex=68e3bb4b&is=68e269cb&hm=e621f4b2106f0194a1f905116bc49934085cfd4706fa229edf64ff48ca5556fd&=') center center / cover no-repeat;
+  filter: blur(8px);
   transition: filter 0.4s ease;
   z-index: 1;
   will-change: filter;
@@ -32,30 +32,30 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 20; /* above everything */
+  z-index: 20;
 }
 
 #playBtn {
-  font-size: 36px;
-  padding: 20px 40px;
+  font-size: 28px;
+  padding: 15px 30px;
   border: none;
-  border-radius: 15px;
-  background: #00ffff;
-  color: #000;
+  border-radius: 12px;
+  background: #660000;
+  color: #fff;
   font-weight: bold;
   cursor: pointer;
-  box-shadow: 0 0 10px #00ffff;
+  box-shadow: 0 0 8px #990000;
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
 #playBtn:hover {
-  box-shadow: 0 0 20px #00ffff, 0 0 40px #00ffff;
+  box-shadow: 0 0 16px #aa1111, 0 0 32px #aa1111;
   transform: scale(1.1);
 }
 
 @keyframes spin {
   0% { transform: rotate(0deg) scale(1); }
-  50% { transform: rotate(180deg) scale(1.1); }
+  50% { transform: rotate(180deg) scale(1.05); }
   100% { transform: rotate(360deg) scale(1); }
 }
 
@@ -67,41 +67,83 @@ body {
 #content {
   position: relative;
   z-index: 5;
-  padding: 30px;
+  padding: 20px;
   text-align: center;
-  filter: blur(8px); /* everything initially blurred */
+  filter: blur(8px);
   transition: filter 0.5s ease;
 }
 
 /* Guild tag & other styles */
-.guild-tag { display: inline-flex; align-items: center; gap: 10px; background: #1a1a1a; padding: 10px 20px; border-radius: 10px; font-size: 24px; font-weight: bold; margin-bottom: 20px; text-decoration: none; color: #fff; border: 2px solid #00ffff; box-shadow: 0 0 5px #00ffff; animation: glow 1.5s infinite alternate; transition: transform 0.3s; }
-.guild-tag img { width: 60px; height: 60px; border-radius: 50%; border: 2px solid #555; }
-.guild-tag:hover { transform: scale(1.05); box-shadow: 0 0 20px #00ffff, 0 0 40px #00ffff; }
-@keyframes glow { 0% { box-shadow: 0 0 5px #00ffff; } 100% { box-shadow: 0 0 20px #00ffff, 0 0 40px #00ffff; } }
+.guild-tag { 
+  display: inline-flex; 
+  align-items: center; 
+  gap: 10px; 
+  background: #1a1a1a; 
+  padding: 8px 16px; 
+  border-radius: 10px; 
+  font-size: 20px; 
+  font-weight: bold; 
+  margin-bottom: 15px; 
+  text-decoration: none; 
+  color: #eee; 
+  border: 2px solid #660000; 
+  box-shadow: 0 0 4px #660000; 
+  animation: glow 1.5s infinite alternate; 
+  transition: transform 0.3s; 
+}
+.guild-tag img { width: 50px; height: 50px; border-radius: 50%; border: 2px solid #333; }
+.guild-tag:hover { transform: scale(1.05); box-shadow: 0 0 10px #660000, 0 0 20px #660000; }
+@keyframes glow { 0% { box-shadow: 0 0 4px #660000; } 100% { box-shadow: 0 0 10px #660000, 0 0 20px #660000; } }
 
-.join-btn { display: inline-block; margin-top: 10px; background: #00ffff; color: #000; padding: 10px 20px; border-radius: 8px; font-weight: bold; text-decoration: none; transition: background 0.2s; }
-.join-btn:hover { background: #66ffff; }
+.join-btn { display: inline-block; margin-top: 8px; background: #660000; color: #fff; padding: 8px 16px; border-radius: 6px; font-weight: bold; text-decoration: none; transition: background 0.2s; }
+.join-btn:hover { background: #880000; }
 
-.elite-divider { margin: 40px 0 20px; font-size: 20px; font-weight: bold; color: #ff4444; }
+.elite-divider { margin: 30px 0 15px; font-size: 18px; font-weight: bold; color: #bb0000; }
 
-.members-grid { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); justify-items: center; }
+.members-grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  justify-items: center;
+}
 
-.member { background: #111; padding: 20px; border-radius: 12px; width: 100%; max-width: 300px; transition: transform 0.2s, box-shadow 0.2s; position: relative; }
-.member:hover { transform: translateY(-5px); }
+.member {
+  background: #111;
+  padding: 12px;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 220px;
+  transition: transform 0.2s, box-shadow 0.2s;
+  position: relative;
+}
+.member:hover { transform: translateY(-3px); box-shadow: 0 0 8px #660000; }
 
-.member img { width: 100px; height: 100px; border-radius: 50%; border: 3px solid #444; margin-bottom: 10px; }
-.member h2, .rank-label { font-family: 'Nosifer', cursive; }
-.member.me h2 { color: #ff0000; font-size: 24px; }
-.member.other h2 { color: #8000ff; font-size: 24px; }
-.member p { font-size: 14px; color: #ccc; }
+.member img { width: 80px; height: 80px; border-radius: 50%; border: 2px solid #333; margin-bottom: 6px; }
+.member h2, .rank-label { font-family: 'Nosifer', cursive; font-size: 18px; }
+.member p { font-size: 12px; color: #ccc; margin: 6px 0; }
 
-.link { display: block; background: #1a1a1a; padding: 10px; margin: 6px auto; border-radius: 8px; text-decoration: none; color: white; font-weight: bold; max-width: 300px; transition: background 0.2s; }
-.link:hover { background: #333; }
+.link { display: block; background: #1a1a1a; padding: 6px; margin: 4px auto; border-radius: 6px; text-decoration: none; color: #eee; font-weight: bold; max-width: 200px; transition: background 0.2s; }
+.link:hover { background: #222; }
 
-.rank-label { display: inline-block; padding: 3px 10px; margin: 4px 2px; border-radius: 6px; font-size: 12px; font-weight: bold; color: white; box-shadow: 0 0 5px #000; }
-.foundingFather { background: linear-gradient(90deg,#ff0000,#ff3333); }
-.velsDuo { background: linear-gradient(90deg,#8000ff,#a366ff); }
-.crvRank { background: linear-gradient(90deg,#00ffff,#66ffff); }
+.rank-label { display: inline-block; padding: 2px 8px; margin: 2px 2px; border-radius: 6px; font-size: 10px; font-weight: bold; color: #fff; box-shadow: 0 0 3px #000; }
+.foundingFather { background: linear-gradient(90deg,#660000,#880000); }
+.Gov { background: linear-gradient(90deg,#660000,#880000); }
+.velsDuo { background: linear-gradient(90deg,#440066,#660088); }
+.crvRank { background: linear-gradient(90deg,#330066,#6600aa); }
+.Protected { background: #333; }
+
+/* Horizontal scroll on small screens */
+@media (max-width: 600px) {
+  .members-grid {
+    display: flex;
+    overflow-x: auto;
+    gap: 10px;
+    padding-bottom: 10px;
+  }
+  .member { flex: 0 0 auto; }
+  .member img { width: 70px; height: 70px; }
+  .member h2, .rank-label { font-size: 16px; }
+}
 </style>
 </head>
 <body>
@@ -137,11 +179,56 @@ body {
 
     <div class="member">
       <img src="https://cdn.discordapp.com/avatars/1421878203861045441/a391919cab42df221d8c6a8698c90356.webp?size=1024" alt="Avatar">
-      <h2>nigga⁸₅⁴C̶R̶V̶</h2>
+      <h2>abnormaal⁸₅⁴C̶R̶V̶</h2>
       <div class="rank-label velsDuo">Vel’s Duo</div>
-      <div class="rank-label crvRank">CRV</div>
-      <p>crv/x671/x135/2009/854/cutorgns/cant think of more</p>
+      <div class="rank-label crvRank">gov</div>
+      <p>crv/x671/x135/2009/854/cutorgns/cant think of more/ this message from vel abnormal HAS 30% OS</p>
       <a class="link" href="https://discord.com/users/1421878203861045441" target="_blank">Link</a>
+    </div>
+
+    <div class="member">
+      <img src="https://cdn.discordapp.com/avatars/1423401606816469042/88c5fef23ee210b69b3df9d3b6b928e9.webp?size=1024" alt="Avatar">
+      <h2>▬ι𓆃 ֆռǟʀʟ ³₈⁶</h2>
+      <div class="rank-label GOV">gov</div>
+      <div class="rank-label crvRank">CRV</div>
+      <p>this message from vel KLAASK HAS 30% OS</p>
+      <a class="link" href="https://discord.com/users/1423401606816469042" target="_blank">Link</a>
+    </div>
+
+    <div class="member">
+      <img src="https://cdn.discordapp.com/avatars/1422327072113823856/2e8b81bb966757dda472788e15fa6828.webp?size=1024" alt="Avatar">
+      <h2>Gashed/Sorrows</h2>
+      <div class="rank-label Protected">Protected</div>
+      <div class="rank-label crvRank">CRV</div>
+      <p></p>
+      <a class="link" href="https://discord.com/users/1422327072113823856" target="_blank">Link</a>
+    </div>
+
+    <div class="member">
+      <img src="https://cdn.discordapp.com/avatars/1413634576051470386/37109425f87495fba2d280c06d12d84f.webp?size=1024" alt="Avatar">
+      <h2>fleshcarved</h2>
+      <div class="rank-label Protected">Protected</div>
+      <div class="rank-label crvRank">CRV</div>
+      <p></p>
+      <a class="link" href="https://discord.com/users/1413634576051470386" target="_blank">Link</a>
+    </div>
+
+    <div class="member">
+      <img src="https://cdn.discordapp.com/avatars/1421260601656737863/ca6961f51b783ed6395bc39e3543c18a.webp?size=1024" alt="Avatar">
+      <h2>𝖎𝖓𝖋𝖊𝖗𝖓</h2>
+      <div class="rank-label Protected">Protected</div>
+      <div class="rank-label crvRank">CRV</div>
+      <p></p>
+      <a class="link" href="https://discord.com/users/1421260601656737863" target="_blank">Link</a>
+    </div>
+
+    <div class="member">
+      <img src="https://cdn.discordapp.com/avatars/1122545389493551135/6da662d0e5a85ce813e518c0be9ea1aa.webp?size=1024" alt="Avatar">
+      <h2>Drywall</h2>
+      <div class="rank-label Protected">Protected</div>
+      <div class="rank-label crvRank">Editor</div>
+      <p>NOT IN COM#fleshcarveCRV/#³⁸⁶VelCRV/#tlocc</p>
+      <a class="link" href="https://discord.com/users/1122545389493551135" target="_blank">Link</a>
     </div>
   </div>
 </div>
