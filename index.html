@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CrvEra</title>
 
-<!-- Inter font for readability -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
@@ -15,9 +14,9 @@
     background: black;
     color: #e5e5e5;
     font-family: 'Inter', sans-serif;
-    overflow: hidden;
     text-align: center;
     user-select: none;
+    min-height: 100vh;
   }
 
   /* Intro screen */
@@ -42,30 +41,25 @@
     transition: opacity 1.3s ease;
     position: relative;
     z-index: 1;
-    height: 100vh;
-    overflow: hidden;
+    padding-top: 5vh;
   }
 
-  /* Hanging figure */
   .figure {
-    position: absolute;
-    top: 5%;
-    left: 50%;
-    transform: translateX(-50%) rotate(0deg);
-    width: 500px;
+    display: block;
+    margin: 0 auto;
+    max-width: 90%;
     animation: sway 6s ease-in-out infinite alternate;
     filter: brightness(1.25);
     opacity: 0.9;
   }
 
   @keyframes sway {
-    0% { transform: translateX(-50%) rotate(-3deg); }
-    100% { transform: translateX(-50%) rotate(3deg); }
+    0% { transform: rotate(-3deg); }
+    100% { transform: rotate(3deg); }
   }
 
-  /* Title and subtitle */
   h1 {
-    margin-top: 52vh;
+    margin-top: 10px;
     font-weight: 700;
     font-size: 4.5rem;
     color: white;
@@ -81,13 +75,14 @@
     letter-spacing: 1.5px;
   }
 
-  /* Member section */
   .members {
-    margin-top: 70px;
+    margin-top: 50px;
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
-    gap: 160px;
+    gap: 60px;
     font-size: 1.2rem;
+    padding-bottom: 50px;
   }
 
   .column {
@@ -109,7 +104,6 @@
     transform: scale(1.05);
   }
 
-  /* Canvas snow effect */
   canvas {
     position: fixed;
     top: 0;
@@ -133,7 +127,7 @@
 <div id="main">
   <img src="anime.gif" class="figure" alt="hanging figure">
   <h1>CRVERA</h1>
-  <h2>VEL SEES WHAT OTHERS DON’T,REMEMBER THAT..</h2>
+  <h2>VEL SEES WHAT OTHERS DON’T, REMEMBER THAT..</h2>
 
   <div class="members">
     <div class="column">
@@ -151,10 +145,7 @@
   </div>
 </div>
 
-<!-- Snow canvas -->
 <canvas id="snow"></canvas>
-
-<!-- Background music -->
 <audio id="bg-music" src="whenthesunhits.mp3" loop></audio>
 
 <script>
@@ -162,7 +153,6 @@ const intro = document.getElementById('intro');
 const main = document.getElementById('main');
 const music = document.getElementById('bg-music');
 
-// Intro screen -> fade to main
 intro.addEventListener('click', () => {
   intro.style.opacity = '0';
   setTimeout(() => { 
@@ -172,14 +162,12 @@ intro.addEventListener('click', () => {
   }, 1000);
 });
 
-// Clickable names open Discord profiles
 document.querySelectorAll('.member').forEach(member => {
   member.addEventListener('click', () => {
     window.open(member.dataset.url, '_blank');
   });
 });
 
-// Smooth music fade-in
 function fadeInMusic() {
   music.volume = 0;
   music.play().catch(()=>{});
@@ -189,7 +177,7 @@ function fadeInMusic() {
   }, 200);
 }
 
-// Snow particle system
+// Snow particles
 const canvas = document.getElementById('snow');
 const ctx = canvas.getContext('2d');
 let particles = [];
@@ -215,7 +203,8 @@ document.addEventListener('mousemove', e => {
 
 function animate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  particles.forEach((p, i) => {
+  for (let i = particles.length - 1; i >= 0; i--) {
+    let p = particles[i];
     p.y += p.speedY;
     p.life -= 1;
     ctx.fillStyle = `rgba(255,255,255,${p.life/100})`;
@@ -223,7 +212,7 @@ function animate() {
     ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
     ctx.fill();
     if (p.life <= 0) particles.splice(i, 1);
-  });
+  }
   requestAnimationFrame(animate);
 }
 animate();
